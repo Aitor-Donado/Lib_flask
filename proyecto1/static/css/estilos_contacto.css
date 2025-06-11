@@ -1,0 +1,131 @@
+/* estilos_contacto.css - Estilos específicos para la página de contacto */
+
+/* Contenedor principal */
+.content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Estilos para el título */
+.content h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+/* Párrafo introductorio */
+.content > p {
+    color: #34495e;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Formulario de contacto */
+.content form {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3rem;
+}
+
+.content label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.content input[type="text"],
+.content input[type="email"],
+.content textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.content input[type="text"]:focus,
+.content input[type="email"]:focus,
+.content textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.content textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.content button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.content button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* Sección de redes sociales */
+.content > p:last-of-type {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.content ul {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+}
+
+.content ul li a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content ul li a:hover {
+    color: #2980b9;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .content {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+    
+    .content h1 {
+        font-size: 2rem;
+    }
+    
+    .content form {
+        padding: 1.5rem;
+    }
+    
+    .content ul {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}

@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/estilos_contacto.css">
+{% endblock %}
+
+{% block header %}
+<h1>Contacto</h1>
+{% endblock %}
+
 {% block content %}
-<h2>Contacta con Nosotros</h2>
 <p>Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto con nosotros.</p>
 <form action="/contact" method="post">
     <label for="name">Nombre:</label>
@@ -17,9 +24,25 @@
 </form>
 <p>También puedes contactarnos a través de nuestras redes sociales:</p>
 <ul>
-    <li><a href="https://www.facebook.com/miempresa" target="_blank">Facebook</a></li>
-    <li><a href="https://www.twitter.com/miempresa" target="_blank">Twitter</a></li>
-    <li><a href="https://www.instagram.com/miempresa" target="_blank">Instagram</a></li>
-    <li><a href="https://www.linkedin.com/company/miempresa" target="_blank">LinkedIn</a></li>
+    <li>
+        <a href="https://www.facebook.com/miempresa" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+    </li>
+    <li>
+        <a href="https://www.twitter.com/miempresa" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-twitter"></i> Twitter
+        </a>
+    </li>
+    <li>
+        <a href="https://www.instagram.com/miempresa" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+    </li>
+    <li>
+        <a href="https://www.linkedin.com/company/miempresa" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin-in"></i> LinkedIn
+        </a>
+    </li>
 </ul>
 {% endblock %}
