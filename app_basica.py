@@ -3,6 +3,7 @@ from flask import Flask
 
 # Crear aplicación Flask
 app = Flask(__name__)
+app.secret_key = 'tu_clave_secreta_muy_compleja_aqui'
 
 # Ruta básica
 @app.route('/')
