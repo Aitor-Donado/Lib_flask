@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/estilos_contacto.css">
+{% endblock %}
+
+
+{% block header %}
+<h1>¡Gracias por contactarnos, {{ form_data.name }}!</h1>
+{% endblock %}
+
+{% block content %}
+<div class="success-message">
+    <p>Hemos recibido tu mensaje correctamente:</p>
+    
+    <div class="message-summary">
+        <p><strong>Nombre:</strong> {{ form_data.name }}</p>
+        <p><strong>Email:</strong> {{ form_data.email }}</p>
+        <p><strong>Mensaje:</strong></p>
+        <div class="message-content">
+            {{ form_data.message }}
+        </div>
+    </div>
+    
+    <p>Nos pondremos en contacto contigo pronto.</p>
+    <a href="{{ url_for('contact') }}" class="button">Enviar otro mensaje</a>
+</div>
+{%endblock %}
+

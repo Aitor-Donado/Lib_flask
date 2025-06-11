@@ -1,0 +1,51 @@
+/* estilo_base.css - Estilos específicos para la página de contacto */
+
+/* Sección de redes sociales */
+p:last-of-type {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+}
+
+ul li a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+ul li a:hover {
+    color: #2980b9;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .content {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+    
+    .content h1 {
+        font-size: 2rem;
+    }
+    
+    .content form {
+        padding: 1.5rem;
+    }
+    
+    .content ul {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
