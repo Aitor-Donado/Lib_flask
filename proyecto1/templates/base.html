@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Sitio Web</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a mi sitio web</h1>
+    </header>
+    <div class="content">
+        {% block content %}
+        <!-- Aquí se insertará el contenido de las otras plantillas -->
+        {% endblock %}
+    </div>
+    <footer>
+        <p>&copy; 2023 Mi Sitio Web</p>
+    </footer>
+</body>
+</html>
