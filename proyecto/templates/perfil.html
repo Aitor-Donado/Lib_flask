@@ -1,0 +1,19 @@
+<!-- templates/perfil.html -->
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h2>Perfil de {{ nombre }}</h2>
+
+    {% if activo %}
+        <p>Estado: Activo</p>
+    {% else %}
+        <p>Estado: Inactivo</p>
+    {% endif %}
+
+    <h3>Habilidades:</h3>
+    <ul>
+        {% for habilidad in habilidades %}
+            <li>{{ habilidad }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
