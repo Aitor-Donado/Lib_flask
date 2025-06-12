@@ -1,21 +1,28 @@
 {% extends "inicio.html" %}
 
 {% block content %}
-<h1>Configuración de la Página Personalizada</h1>
-<form method="post">
-    <label for="titulo">Título de la Página:</label>
-    <input type="text" id="titulo" name="titulo" value="{{ titulo }}" required>
-    <br>
-    <label for="descripcion">Descripción de la Página:</label>
-    <textarea id="descripcion" name="descripcion" required>{{ descripcion }}</textarea>
-    <br>
-    <button type="submit">Guardar Cambios</button>
-    <br>
-    {% if mensaje %}
-    <p style="color: green;">{{ mensaje }}</p>
-    {% endif %}
-    {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-</form>
+<div class="form-container">
+        <h2>Configura tus Preferencias</h2>
+        <form method="POST" action="{{ url_for('configurar') }}">
+            <div>
+                <label for="nombre">Tu Nombre:</label>
+                <input type="text" id="nombre" name="nombre" value="{{ nombre_actual or '' }}">
+            </div>
+            <div>
+                <label for="color">Color de Fondo Preferido:</label>
+                <select id="color" name="color">
+                    <option value="" {% if not color_actual %}selected{% endif %}>-- Sin preferencia --</option>
+                    <option value="lightblue" {% if color_actual == 'lightblue' %}selected{% endif %}>Azul Claro</option>
+                    <option value="lightgreen" {% if color_actual == 'lightgreen' %}selected{% endif %}>Verde Claro</option>
+                    <option value="lightcoral" {% if color_actual == 'lightcoral' %}selected{% endif %}>Coral Claro</option>
+                    <option value="lavender" {% if color_actual == 'lavender' %}selected{% endif %}>Lavanda</option>
+                    <option value="#333333" {% if color_actual == '#333333' %}selected{% endif %}>Gris Oscuro (para texto blanco)</option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Guardar Preferencias">
+            </div>
+        </form>
+        <p><a href="{{ url_for('inicio') }}">Volver a Inicio</a></p>
+    </div>
 {% endblock content %}

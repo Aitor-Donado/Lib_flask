@@ -7,11 +7,13 @@
     <style>
         body {
             font-family: sans-serif;
+            /* stylelint-disable */
             {% if color_fondo %}
             background-color: {{color_fondo}};
             {% else %}
             background-color: white;
             {% endif %}
+            /* stylelint-enable */
         }
     </style>
 </head>
