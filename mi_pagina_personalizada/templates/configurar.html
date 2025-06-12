@@ -1,0 +1,21 @@
+{% extends "inicio.html" %}
+
+{% block content %}
+<h1>Configuración de la Página Personalizada</h1>
+<form method="post">
+    <label for="titulo">Título de la Página:</label>
+    <input type="text" id="titulo" name="titulo" value="{{ titulo }}" required>
+    <br>
+    <label for="descripcion">Descripción de la Página:</label>
+    <textarea id="descripcion" name="descripcion" required>{{ descripcion }}</textarea>
+    <br>
+    <button type="submit">Guardar Cambios</button>
+    <br>
+    {% if mensaje %}
+    <p style="color: green;">{{ mensaje }}</p>
+    {% endif %}
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</form>
+{% endblock content %}

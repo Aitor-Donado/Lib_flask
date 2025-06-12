@@ -32,7 +32,7 @@ def logout():
     session.pop('usuario', None)
     return redirect(url_for('login'))
 
-from flask import make_response, render_template
+from flask import make_response
 
 @app.route('/setcookie')
 def set_cookie_route():
