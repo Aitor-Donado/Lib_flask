@@ -1,0 +1,8 @@
+# perfil.html
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Perfil de Usuario</h1>
+<p>Bienvenido, {{ usuario }}!</p>
+<p>Tu navegador es: {{ session.user_agent }}</p>
+{% endblock %}

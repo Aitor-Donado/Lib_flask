@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Login</h1>
+<form method="post">
+    <label for="username">Usuario:</label>
+    <input type="text" id="username" name="username" value="{{ request.cookies.get('username', '') }}" required>
+    <br>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit">Iniciar sesión</button>
+    <br>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a>.</p>
+</form>
+{% endblock %}
+
