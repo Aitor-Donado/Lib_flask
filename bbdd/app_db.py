@@ -2,9 +2,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
+import os
+# Cargar el string de conexion de .env
+db_conn_str = os.getenv('db_conn_str', 'sqlite:///blog.db')
+
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = db_conn_str
 db = SQLAlchemy(app)
 
 # Modelo de datos
