@@ -6,7 +6,7 @@ app.secret_key = 'tu_clave_secreta'
 
 @app.route('/')
 def inicio():
-    return render_template("inicio.html")
+    return render_template("inicio.html", color_fondo="lightblue")
 
 @app.route('/configurar')
 def configurar():
