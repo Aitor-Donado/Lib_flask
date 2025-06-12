@@ -4,6 +4,7 @@
 <div class="form-container">
         <h2>Configura tus Preferencias</h2>
         <form method="POST" action="{{ url_for('configurar') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div>
                 <label for="nombre">Tu Nombre:</label>
                 <input type="text" id="nombre" name="nombre" value="{{ nombre_actual or '' }}">

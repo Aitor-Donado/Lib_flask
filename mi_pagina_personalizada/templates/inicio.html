@@ -8,8 +8,8 @@
         body {
             font-family: sans-serif;
             /* stylelint-disable */
-            {% if color_fondo %}
-            background-color: {{color_fondo}};
+            {% if request.cookies.color_fondo %}
+            background-color: {{request.cookies.color_fondo}};
             {% else %}
             background-color: white;
             {% endif %}
@@ -21,10 +21,14 @@
     <nav>
         <a href="/">Inicio</a>
         <a href="/configurar">Configurar Página</a>
+        <a href="/olvidar">Olvidar</a>
     </nav>
     {% block content %}
     <h1>Bienvenido a mi página personalizada</h1>
+    <p>Hola, {{session.usuario if session.usuario else "invitado"}}!</p>
     <p>Esta es la sección principal del sitio web.</p>
+    <p>Utiliza el enlace de navegación para configurar tus preferencias.</p>
+    <p>Si no has configurado nada, el fondo será blanco.</p>
     {% endblock content %}
 </body>
 </html>
