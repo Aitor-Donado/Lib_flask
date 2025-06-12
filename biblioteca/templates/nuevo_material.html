@@ -7,18 +7,6 @@
 </head>
 <body>
 
-    """    __tablename__ = 'materiales'
-    codigo_inventario = Column(String, primary_key=True)
-    titulo = Column(String)
-    tipo = Column(String)  # 'libro', 'revista', 'dvd'
-    autor = Column(String, nullable=True)
-    isbn = Column(String, nullable=True)
-    numero_paginas = Column(Integer, nullable=True)
-    fecha_publicacion = Column(String, nullable=True)
-    numero_edicion = Column(String, nullable=True)
-    duracion = Column(Integer, nullable=True)
-    director = Column(String, nullable=True)
-    disponible = Column(Boolean, default=True)"""
     <form action="/nuevo_material" method="post">
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" name="titulo" required>

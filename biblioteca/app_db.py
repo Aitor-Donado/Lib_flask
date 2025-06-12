@@ -2,11 +2,20 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+import psycopg2
 import uuid
-import os
-# Cargar el string de conexion de .env
-db_conn_str = os.getenv('db_conn_str', 'sqlite:///blog.db')
 
+# Cargar el string de conexion de biblioteca/.env con dotenv
+from dotenv import load_dotenv
+import os
+from pathlib import Path
+# Obtener la ruta absoluta del archivo .env
+env_path = Path(".env").resolve()  # Convierte a ruta absoluta
+load_dotenv(env_path)
+db_conn_str = os.getenv("db_conn_str")
+
+print(env_path)
+print(db_conn_str)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_conn_str

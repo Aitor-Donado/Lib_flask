@@ -1,0 +1,19 @@
+<!-- app/templates/posts.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Posts</title>
+</head>
+<body>
+    <h1>Lista de Posts</h1>
+    <ul>
+        {% for post in posts %}
+        <li>
+            <strong>{{ post.title }}</strong> - 
+            <em>por {{ post.author.username }}</em>
+            <p>{{ post.content }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
