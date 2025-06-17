@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préstamos</title>
+</head>
+<body>
+    <h1>Préstamos</h1>
+    <p>Esta es la página de préstamos.</p>
+    <h2>Lista de préstamos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Libro</th>
+                <th>Fecha de préstamo</th>
+                <th>Fecha de devolución</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prestamo in prestamos %}
+            <tr>
+                <td>{{ prestamo.id }}</td>
+                <td>{{ prestamo.usuario.nombre }} {{ prestamo.usuario.apellido }}</td>
+                <td>{{ prestamo.material.titulo }}</td>
+                <td>{{ prestamo.fecha_prestamo }}</td>
+                <td>{{ prestamo.fecha_devolucion }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>

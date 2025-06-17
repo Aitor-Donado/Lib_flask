@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de préstamos</title>
+</head>
+<body>
+    <h1>Creación de préstamos</h1>  
+    <h2>Selecciona un usuario y un material para crear un préstamo</h2>
+    <form action="/nuevo_prestamo" method="post">
+    <label for="usuario_id">Selecciona un usuario:</label>
+    {% for usuario in usuarios %}
+        <select name="usuario_id" id="usuario_id">
+            <option value="{{ usuario.id }}">{{ usuario.nombre }} {{ usuario.apellido }}</option>
+        </select>
+        <br><br>
+        {% endfor %}
+        <br><br>
+    <label for="material_id">Selecciona un material:</label>
+    {% for material in materiales %}
+        <br>
+        <select name="material_id" id="material_id">
+            {% for material in materiales %}
+                <option value="{{ material.id }}">{{ material.titulo }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit">Crear préstamo</button>
+    {% endfor %}
+    </form>
+</body>
+</html>

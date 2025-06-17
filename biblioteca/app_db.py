@@ -18,7 +18,7 @@ print(env_path)
 print(db_conn_str)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = db_conn_str
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///biblioteca.db"
 db = SQLAlchemy(app)
 
 # Modelo de datos
@@ -110,6 +110,71 @@ def listar_materiales():
     materiales = MaterialDB.query.all()
     return render_template('materiales.html', materiales=materiales)
 
+@app.route("/nuevo_usuario", methods=["GET", "POST"])
+def nuevo_usuario():
+    if request.method == "POST":
+        id_usuario = uuid.uuid4().hex
+        nombre = request.form["nombre"]
+        apellido = request.form["apellido"]
+        nuevo_usuario = UsuarioDB(
+            id_usuario=id_usuario,
+            nombre=nombre,
+            apellido=apellido,
+        )
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+        return redirect(url_for('listar_usuarios'))
+    else:
+        return render_template("nuevo_usuario.html")
+
+@app.route('/usuarios')
+def listar_usuarios():
+    usuarios = UsuarioDB.query.all()
+    return render_template('usuarios.html', usuarios=usuarios)
+
+@app.route("/nuevo_prestamo", methods=["GET", "POST"])
+def nuevo_prestamo():
+    if request.method == "POST":
+        #id_prestamo = uuid.uuid4().hex
+        usuario_id = request.form["usuario_id"]
+        material_id = request.form["material_id"]
+        fecha_prestamo = datetime.now()
+        nuevo_prestamo = PrestamoDB(
+            #id_prestamo=id_prestamo,
+            id_usuario=usuario_id,
+            id_material=material_id,
+            fecha_prestamo=fecha_prestamo,
+        )
+        db.session.add(nuevo_prestamo)
+        db.session.commit()
+        return redirect(url_for('listar_prestamos'))
+    else:
+        usuarios = UsuarioDB.query.all()
+        materiales = MaterialDB.query.all()
+        return render_template("nuevo_prestamo.html", usuarios=usuarios, materiales=materiales)
+@app.route('/prestamos')
+
+def listar_prestamos():
+    prestamos = PrestamoDB.query.all()
+    return render_template('prestamos.html', prestamos=prestamos)
+
+@app.route('/nueva_lectura')
+def nueva_lectura():
+    usuarios = UsuarioDB.query.all()
+    usuario_seleccionado = request.args.get('usuario_id')
+    materiales = []
+    
+    if usuario_seleccionado:
+        usuario = UsuarioDB.query.get(usuario_seleccionado)
+        print("Préstamos", usuario.prestamos)
+        materiales = [prestamo.material for prestamo in usuario.prestamos]
+    print(usuarios)
+    print(materiales)
+    print(usuario_seleccionado)
+    return render_template('nueva_lectura.html', 
+                         usuarios=usuarios,
+                         materiales=materiales,
+                         usuario_seleccionado=usuario_seleccionado)
 
 @app.route('/posts')
 def listar_posts():

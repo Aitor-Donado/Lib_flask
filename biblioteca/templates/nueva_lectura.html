@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Lectura</title>
+    <script>
+        function cargarMateriales(usuarioId) {
+            // Esta función se llamará cuando cambie el select de usuarios
+            window.location.href = '/nueva_lectura?usuario_id=' + usuarioId;
+        }
+    </script>
+</head>
+<body>
+    <form action="/guardar_lectura" method="post">
+        <label for="usuario">Usuario:</label>
+        <select name="usuario_id" id="usuario" onchange="cargarMateriales(this.value)">
+            <option value="">Seleccione un usuario</option>
+            {% for usuario in usuarios %}
+                <option value="{{ usuario.id }}" {% if usuario.id == usuario_seleccionado %}selected{% endif %}>
+                    {{ usuario.nombre }} {{ usuario.apellido }}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <br><br>
+        
+        <label for="material">Material:</label>
+        <select name="material_id" id="material_id">
+            {% if not materiales %}
+                <option value="">No hay materiales disponibles</option>
+            {% else %}
+                {% for material in materiales %}
+                    <option value="{{ material.id }}">{{ material.titulo }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        
+        <br><br>
+        
+        <input type="submit" value="Guardar Lectura">
+    </form>
+</body>
+</html>
