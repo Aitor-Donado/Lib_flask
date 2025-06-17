@@ -41,6 +41,9 @@ class PrestamoDB(Base):
     usuario = relationship("UsuarioDB", back_populates="prestamos")
     material = relationship("MaterialDB", back_populates="prestamos")
 
+    def __repr__(self):
+        return f"<PrestamoDB(id={self.id}, usuario={self.usuario}, material={self.material}, fecha_prestamo={self.fecha_prestamo}, fecha_devolucion={self.fecha_devolucion})>"
+
 if __name__ == "__main__":
     # Crear las tablas en la base de datos
 

@@ -1,0 +1,11 @@
+{% block form_material %}
+<label for="material">Seleccione un material prestado:</label>
+<select name="material_id" id="material" onchange="cargarFormularioLectura('{{ usuario.id_usuario }}', this.value)">
+    <option value="">-- Seleccione --</option>
+    {% for prestamo in usuario.prestamos %}
+        <option value="{{ prestamo.material.codigo_inventario }}">
+            {{ prestamo.material.titulo }} ({{ prestamo.material.tipo }})
+        </option>
+    {% endfor %}
+</select>
+{% endblock %}

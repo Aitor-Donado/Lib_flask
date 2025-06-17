@@ -4,41 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva Lectura</title>
-    <script>
-        function cargarMateriales(usuarioId) {
-            // Esta función se llamará cuando cambie el select de usuarios
-            window.location.href = '/nueva_lectura?usuario_id=' + usuarioId;
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <form action="/guardar_lectura" method="post">
-        <label for="usuario">Usuario:</label>
-        <select name="usuario_id" id="usuario" onchange="cargarMateriales(this.value)">
-            <option value="">Seleccione un usuario</option>
-            {% for usuario in usuarios %}
-                <option value="{{ usuario.id }}" {% if usuario.id == usuario_seleccionado %}selected{% endif %}>
-                    {{ usuario.nombre }} {{ usuario.apellido }}
-                </option>
-            {% endfor %}
-        </select>
-        
-        <br><br>
-        
-        <label for="material">Material:</label>
-        <select name="material_id" id="material_id">
-            {% if not materiales %}
-                <option value="">No hay materiales disponibles</option>
-            {% else %}
-                {% for material in materiales %}
-                    <option value="{{ material.id }}">{{ material.titulo }}</option>
-                {% endfor %}
-            {% endif %}
-        </select>
-        
-        <br><br>
-        
-        <input type="submit" value="Guardar Lectura">
-    </form>
+    <h2>Registro de Nueva Lectura</h2>
+    
+    <!-- Sección de selección de usuario -->
+    <div id="usuario-section">
+        {% block form_usuario %}{% endblock %}
+    </div>
+    
+    <!-- Sección de selección de material (se carga dinámicamente) -->
+    <div id="material-section" style="display: none;">
+        {% block form_material %}{% endblock %}
+    </div>
+    
+    <!-- Formulario de lectura (se carga después de seleccionar material) -->
+    <div id="lectura-section" style="display: none;">
+        {% block form_lectura %}{% endblock %}
+    </div>
+
+    <script>
+        function cargarMateriales(usuarioId) {
+    if(usuarioId) {
+        fetch(`/obtener_materiales/${usuarioId}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('material-section').innerHTML = html;
+                document.getElementById('material-section').style.display = 'block';
+                document.getElementById('lectura-section').style.display = 'none';
+            });
+        }
+    }
+
+    function cargarFormularioLectura(usuarioId, materialId) {
+        if(usuarioId && materialId) {
+            fetch(`/obtener_form_lectura/${usuarioId}/${materialId}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('lectura-section').innerHTML = html;
+                    document.getElementById('lectura-section').style.display = 'block';
+                });
+        }
+    }       
+    </script>
 </body>
 </html>

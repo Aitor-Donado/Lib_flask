@@ -1,5 +1,5 @@
 # app_db.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 import psycopg2
@@ -19,6 +19,7 @@ print(db_conn_str)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///biblioteca.db"
+app.secret_key = "Ya_la_cambio_luego"
 db = SQLAlchemy(app)
 
 # Modelo de datos
@@ -135,46 +136,93 @@ def listar_usuarios():
 @app.route("/nuevo_prestamo", methods=["GET", "POST"])
 def nuevo_prestamo():
     if request.method == "POST":
-        #id_prestamo = uuid.uuid4().hex
-        usuario_id = request.form["usuario_id"]
-        material_id = request.form["material_id"]
-        fecha_prestamo = datetime.now()
-        nuevo_prestamo = PrestamoDB(
-            #id_prestamo=id_prestamo,
-            id_usuario=usuario_id,
-            id_material=material_id,
-            fecha_prestamo=fecha_prestamo,
-        )
-        db.session.add(nuevo_prestamo)
-        db.session.commit()
-        return redirect(url_for('listar_prestamos'))
+        try:
+            usuario_id = request.form["usuario_id"]
+            material_id = request.form["material_id"]
+            
+            # Validar que existen
+            usuario = UsuarioDB.query.get(usuario_id)
+            material = MaterialDB.query.get(material_id)
+            
+            if not usuario:
+                flash("Usuario no encontrado", "error")
+                return redirect(url_for('nuevo_prestamo'))
+                
+            if not material:
+                flash("Material no encontrado", "error")
+                return redirect(url_for('nuevo_prestamo'))
+                
+            if not material.disponible:
+                flash("El material no está disponible para préstamo", "error")
+                return redirect(url_for('nuevo_prestamo'))
+            
+            # Crear préstamo
+            nuevo_prestamo = PrestamoDB(
+                id_usuario=usuario_id,
+                id_material=material_id,
+                fecha_prestamo=datetime.now(),
+                fecha_devolucion=datetime.now() + timedelta(days=14)
+            )
+            
+            # Actualizar disponibilidad del material
+            material.disponible = False
+            
+            # Guardar cambios
+            db.session.add(nuevo_prestamo)
+            db.session.commit()
+            
+            flash("Préstamo creado exitosamente", "success")
+            return redirect(url_for('listar_prestamos'))
+            
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al crear préstamo: {str(e)}", "error")
+            return redirect(url_for('nuevo_prestamo'))
+            
     else:
+        # GET request
         usuarios = UsuarioDB.query.all()
-        materiales = MaterialDB.query.all()
-        return render_template("nuevo_prestamo.html", usuarios=usuarios, materiales=materiales)
+        materiales = MaterialDB.query.filter_by(disponible=True).all()
+        return render_template("nuevo_prestamo.html", 
+                            usuarios=usuarios, 
+                            materiales=materiales)
+    
 @app.route('/prestamos')
-
 def listar_prestamos():
     prestamos = PrestamoDB.query.all()
     return render_template('prestamos.html', prestamos=prestamos)
 
+
 @app.route('/nueva_lectura')
 def nueva_lectura():
     usuarios = UsuarioDB.query.all()
-    usuario_seleccionado = request.args.get('usuario_id')
-    materiales = []
-    
-    if usuario_seleccionado:
-        usuario = UsuarioDB.query.get(usuario_seleccionado)
-        print("Préstamos", usuario.prestamos)
-        materiales = [prestamo.material for prestamo in usuario.prestamos]
-    print(usuarios)
+    return render_template('form_usuario.html', usuarios=usuarios)
+
+@app.route('/obtener_materiales/<usuario_id>')
+def obtener_materiales(usuario_id):
+    usuario = UsuarioDB.query.get(usuario_id)
+    materiales = usuario.prestamos
     print(materiales)
-    print(usuario_seleccionado)
-    return render_template('nueva_lectura.html', 
-                         usuarios=usuarios,
-                         materiales=materiales,
-                         usuario_seleccionado=usuario_seleccionado)
+    return render_template('form_material.html', usuario=usuario)
+
+@app.route('/obtener_form_lectura/<usuario_id>/<material_id>')
+def obtener_form_lectura(usuario_id, material_id):
+    usuario = UsuarioDB.query.get(usuario_id)
+    material = MaterialDB.query.get(material_id)
+    return render_template('form_lectura.html', usuario=usuario, material=material)
+
+@app.route('/guardar_lectura', methods=['POST'])
+def guardar_lectura():
+    usuario_id = request.form.get('usuario_id')
+    material_id = request.form.get('material_id')
+    inicio = request.form.get('inicio')
+    fin = request.form.get('fin')
+    print(f"Usuario ID: {usuario_id}, Material ID: {material_id}, Inicio: {inicio}, Fin: {fin}")
+    
+    # Aquí procesas y guardas los datos
+    # ...
+    
+    return redirect('/exito')  # O muestra un mensaje de éxito
 
 @app.route('/posts')
 def listar_posts():

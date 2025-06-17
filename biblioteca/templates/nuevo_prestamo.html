@@ -7,27 +7,42 @@
 </head>
 <body>
     <h1>Creación de préstamos</h1>  
-    <h2>Selecciona un usuario y un material para crear un préstamo</h2>
+    <h2>Selecciona un usuario y un material disponible para crear un préstamo</h2>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
     <form action="/nuevo_prestamo" method="post">
-    <label for="usuario_id">Selecciona un usuario:</label>
-    {% for usuario in usuarios %}
-        <select name="usuario_id" id="usuario_id">
-            <option value="{{ usuario.id }}">{{ usuario.nombre }} {{ usuario.apellido }}</option>
-        </select>
-        <br><br>
-        {% endfor %}
-        <br><br>
-    <label for="material_id">Selecciona un material:</label>
-    {% for material in materiales %}
-        <br>
-        <select name="material_id" id="material_id">
-            {% for material in materiales %}
-                <option value="{{ material.id }}">{{ material.titulo }}</option>
+        <label for="usuario_id">Selecciona un usuario:</label>
+        <select name="usuario_id" id="usuario_id" required>
+            <option value="">-- Seleccione usuario --</option>
+            {% for usuario in usuarios %}
+                <option value="{{ usuario.id_usuario }}">
+                    {{ usuario.nombre }} {{ usuario.apellido }} (ID: {{ usuario.id_usuario }})
+                </option>
             {% endfor %}
         </select>
         <br><br>
+
+        <label for="material_id">Selecciona un material disponible:</label>
+        <select name="material_id" id="material_id" required>
+            <option value="">-- Seleccione material --</option>
+            {% for material in materiales if material.disponible %}
+                <option value="{{ material.codigo_inventario }}">
+                    {{ material.titulo }} ({{ material.tipo }} - {{ material.codigo_inventario }})
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        
         <button type="submit">Crear préstamo</button>
-    {% endfor %}
     </form>
 </body>
 </html>

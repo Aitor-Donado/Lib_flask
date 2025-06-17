@@ -1,0 +1,13 @@
+{% extends "nueva_lectura.html" %}
+
+{% block form_usuario %}
+<label for="usuario">Seleccione un usuario:</label>
+<select name="usuario_id" id="usuario" onchange="cargarMateriales(this.value)">
+    <option value="">-- Seleccione --</option>
+    {% for usuario in usuarios %}
+        <option value="{{ usuario.id_usuario }}">
+            {{ usuario.nombre }} {{ usuario.apellido }} (ID: {{ usuario.id_usuario }})
+        </option>
+    {% endfor %}
+</select>
+{% endblock %}

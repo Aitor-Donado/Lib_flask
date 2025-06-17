@@ -1,0 +1,23 @@
+<!-- form_lectura.html -->
+{% block form_lectura %}
+<h3>Registrar Lectura</h3>
+<p>Usuario: {{ usuario.nombre }} {{ usuario.apellido }}</p>
+<p>Material: {{ material.titulo }} ({{ material.tipo }})</p>
+
+<form action="/guardar_lectura" method="post">
+    <input type="hidden" name="usuario_id" value="{{ usuario.id_usuario }}">
+    <input type="hidden" name="material_id" value="{{ material.codigo_inventario }}">
+    
+    <div>
+        <label for="inicio">Hora de inicio:</label>
+        <input type="time" id="inicio" name="inicio" required>
+    </div>
+    
+    <div>
+        <label for="fin">Hora de finalización:</label>
+        <input type="time" id="fin" name="fin" required>
+    </div>
+    
+    <button type="submit">Guardar Lectura</button>
+</form>
+{% endblock %}
