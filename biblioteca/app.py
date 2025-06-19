@@ -218,16 +218,25 @@ def guardar_lectura():
     inicio = request.form.get('inicio')
     fin = request.form.get('fin')
     print(f"Usuario ID: {usuario_id}, Material ID: {material_id}, Inicio: {inicio}, Fin: {fin}")
-    
+    lectura = {"user": usuario_id, 
+               'material': material_id, 
+               'inicio': inicio, 
+               'fin': fin}
     # Aquí procesas y guardas los datos
     # ...
     
-    return redirect('/exito')  # O muestra un mensaje de éxito
+    return render_template('exito.html', lectura=lectura) # O muestra un mensaje de éxito
+
 
 @app.route('/posts')
 def listar_posts():
     posts = MaterialDB.query.all()
     return render_template('posts.html', posts=posts)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
